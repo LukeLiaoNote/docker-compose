@@ -1,0 +1,18 @@
+version: "3"
+services: 
+  mysql:
+    image: mysql:5.7
+    restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    network_mode: "bridge"
+    ports: 
+      - 3306:3306
+    volumes:
+      # - my.cnf:/etc/mysql/my.cnf
+      - "./data:/var/lib/mysql"
+      # - "./mysql/logs:/var/log/mysql"
+      # - /tmp/mysql.sock:/var/run/mysqld/mysqld.sock
+      - "./init:/docker-entrypoint-initdb.d"
+    env_file: 
+      - mysql.env
+

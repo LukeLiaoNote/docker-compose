@@ -1,0 +1,26 @@
+version: '3'
+services:
+  es_1:
+    image: elasticsearch:7.8.0
+    container_name: es_1
+    restart: always
+    environment:
+        - node.name=node1              
+        - network.publish_host=10.0.2.104
+        - network.host=0.0.0.0             
+        - discovery.seed_hosts=10.0.2.125,10.0.2.177         
+        - cluster.initial_master_nodes=10.0.2.104 
+        - cluster.name=ms-es-cluster     
+        - bootstrap.memory_lock=true
+        - "ES_JAVA_OPTS=-Xms3072m -Xmx3072m" 
+    ulimits:          
+      memlock:
+        soft: -1    
+        hard: -1
+    volumes:
+      - './data:/usr/share/elasticsearch/data'
+      - './plugins:/usr/share/elasticsearch/plugins' 
+      - './logs:/usr/share/elasticsearch/logs'
+    ports:
+      - 9200:9200    
+      - 9300:9300 

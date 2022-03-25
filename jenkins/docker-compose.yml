@@ -1,0 +1,22 @@
+version: '3'
+services:
+  jenkins:
+    image: ci/basic
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: jenkins
+    restart: always
+    user: root
+    ports:
+      - '8080:8080'
+      - '50000:50000'
+    volumes:
+      - ./data:/var/jenkins_home
+      - ./pipeline/ansible:/etc/ansible
+      - ./pipeline/config:/opt/config
+      - ./pipeline/dockerfile:/opt/dockerfile
+      - ./pipeline/script:/opt/script
+      - /usr/bin/docker:/usr/bin/docker
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/local/jdk-11:/usr/local/jdk-11
